@@ -1,0 +1,19 @@
+{
+  "name": "todo-list-api-account",
+  "version": "1.0.0",
+  "description": "Use API, MongoDB, NodeJS, Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "RadioBoys",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RadioBoys/Todo-List-Api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RadioBoys/Todo-List-Api/issues"
+  },
+  "homepage": "https://github.com/RadioBoys/Todo-List-Api#readme"
+}
