@@ -1,0 +1,28 @@
+<div class="container">
+    <header class="text-center text-light my-4">
+        <h1 class="mb-4">Todo List</h1>
+        {{!-- <form class="search">
+            <input class="form-control m-auto" type="text" name="search" placeholder="search todos" />
+        </form> --}}
+
+        <form class="add text-center my-4 search" action="">
+            <input class="form-control m-auto" type="text" name="add" placeholder="Create / Search todo ..."/>
+            <br />
+            <div class="text-center">
+                <input type="submit" class="btn btn-light" style="display:none"/>
+            </div>
+        </form>
+    </header>
+
+    <ul class="list-group todos mx-auto text-light delete">
+        {{#each showData}}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{this.title}}</span>
+            <span class="hidden-id">{{this._id}}</span>
+            <i class="far fa-trash-alt delete"></i>
+        </li>
+        {{/each}}
+    </ul>
+
+
+</div>
