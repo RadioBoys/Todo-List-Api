@@ -1,14 +1,16 @@
 <body>
-  <link rel="stylesheet" href="../../public/css/styleLogin.css" />
+    <link rel="stylesheet" href="../../public/css/styleLogin.css" />
     <section class="container">
         <div class="login-container">
             <div class="circle circle-one"></div>
             <div class="form-container">
-                <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" class="illustration" />
+                <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png"
+                    alt="illustration" class="illustration" />
                 <h1 class="opacity">LOGIN</h1>
                 <form method="POST" action="/login">
                     <input type="text" name="username" placeholder="USERNAME" />
                     <input type="password" name="password" placeholder="PASSWORD" />
+                    <div class="errorLogin"></div>
                     <button class="opacity">SUBMIT</button>
                 </form>
                 <div class="register-forget opacity">
@@ -20,5 +22,19 @@
         </div>
         <div class="theme-btn-container"></div>
     </section>
-    
+
+    <script>
+        const errorMessage = document.querySelector('.errorLogin');
+
+        // Get error message
+        function getQueryStringValue(key) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(key);
+        }
+
+        const message = getQueryStringValue('message');
+        if (message) {
+            errorMessage.innerHTML = `<span style='color:red; font-family: "poppins"; font-size: 1.4rem;'>${message}</span>`
+        }
+    </script>
 </body>

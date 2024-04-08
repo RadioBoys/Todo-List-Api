@@ -45,7 +45,8 @@ function route(app) {
             res.redirect(`/?username=${req.body.username}`);
 
         } else {
-            res.render('login');
+            res.redirect(`/login?message=Username or Password incorrect`);
+
         }
     })
     app.get('/register', (req, res) => {
