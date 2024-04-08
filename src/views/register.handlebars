@@ -1,0 +1,88 @@
+<body>
+    <link rel="stylesheet" href="../../public/css/styleLogin.css" />
+    <section class="container">
+        <div class="login-container">
+            <div class="circle circle-one"></div>
+            <div class="form-container">
+                <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png"
+                    alt="illustration" class="illustration" />
+                <h1 class="opacity">CREATE ACCOUNT</h1>
+                <form method="POST" class="formRegister" onsubmit="return register()" action="/register">
+                    <input type="text" name="email" class="email" onclick="removeErrorEmail()"
+                        placeholder="EMAIL ADDRESS" required value="{{req.body.email}}" />
+                    <div class="errorEmail"></div>
+
+                    <input type="text" name="username" class="username" placeholder="USERNAME" required
+                        value="{{req.body.username}}" />
+                    <div class="errorUsername"></div>
+
+                    <input type="password" name="password" class="password" placeholder="PASSWORD" required />
+                    <input type="password" name="rePassword" class="rePassword" onclick="removeErrorPassword()"
+                        placeholder="RE-PASSWORD" required />
+                    <div class="errorPassword"></div>
+
+                    <button class="opacity">REGISTER</button>
+                </form>
+                <div class="register-forget opacity">
+                </div>
+            </div>
+            <div class="circle circle-two"></div>
+        </div>
+        <div class="theme-btn-container"></div>
+    </section>
+
+    <script>
+        const btn = document.querySelector('.opacity');
+        const emailAddress = document.querySelector('.email');
+        const userName = document.querySelector('.username');
+        const password = document.querySelector('.password');
+        const rePassword = document.querySelector('.rePassword');
+        const errorPassword = document.querySelector('.errorPassword');
+        const errorEmail = document.querySelector('.errorEmail');
+        const errorUsername = document.querySelector('.errorUsername');
+
+        function removeErrorEmail() {
+            emailAddress.addEventListener('input', () => {
+                errorEmail.innerHTML = ``
+                emailAddress.style.background = 'none';
+            })
+        }
+        function removeErrorPassword() {
+            rePassword.addEventListener('input', () => {
+                errorPassword.innerHTML = ``
+            })
+        }
+
+        function register() {
+
+            if (!emailAddress.value.includes('@')) {
+                console.log("False");
+                errorEmail.innerHTML = `<span style='color:red; font-family: "poppins"; font-size: 1rem'>Invalid email address</span>`
+                emailAddress.style.background = '#4e3534';
+                return false;
+            }
+
+            if (password.value !== rePassword.value) {
+                errorPassword.innerHTML = `<span style='color:red; font-family: "poppins"; font-size: 1.4rem'>Password do not match</span>`
+                rePassword.style.background = '#4e3534';
+                return false;
+            }
+        }
+
+        // Get error message
+        function getQueryStringValue(key) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(key);
+        }
+        const message = getQueryStringValue('message');
+        if (message) {
+            if (message.includes('Username')) {
+                errorPassword.innerHTML = `<span style='color:red; font-family: "poppins"; font-size: 1.4rem;'>Username is already registered</span>`
+
+            }
+            if (message.includes('Email')) {
+                errorPassword.innerHTML = `<span style='color:red; font-family: "poppins"; font-size: 1.4rem;'>Email is already registered</span>`
+            }
+        }
+    </script>
+</body>

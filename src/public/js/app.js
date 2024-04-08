@@ -18,6 +18,8 @@ const generateTemplate = (todo) => {
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const todo = addForm.add.value.trim();
+  const searchParams = new URLSearchParams(window.location.search);
+  const username = searchParams.get('username');
   if (todo.length) {
     fetch('/api', {
       method: 'POST',
@@ -26,11 +28,12 @@ addForm.addEventListener("submit", (e) => {
       },
       body: JSON.stringify({
         title: todo,
+        username: username,
       })
     })
     generateTemplate(todo);
     addForm.reset();
-    window.location.href = '/';
+    window.location.reload();
   }
 });
 
@@ -54,26 +57,6 @@ list.addEventListener("click", (e) => {
   }
 });
 
-
-// const filterTodos = (term) => {
-//   Array.from(list.children)
-//     .filter((todo) => !todo.textContent.toLowerCase().includes(term))
-//     .forEach((todo) => todo.classList.add("filtered"));
-
-//   Array.from(list.children)
-//     .filter((todo) => todo.textContent.toLowerCase().includes(term))
-//     .forEach((todo) => todo.classList.remove("filtered"));
-// };
-
-// // keyup event
-// search.addEventListener("keyup", () => {
-//   const term = search.value.trim().toLowerCase();
-//   filterTodos(term);
-
-//   if(filterTodos(term)){
-//     console.log("Can't filter");
-//   }
-// });
 
 const filterTodos = (term) => {
   const filteredItems = Array.from(list.children).filter((todo) =>
@@ -100,7 +83,7 @@ search.addEventListener("keyup", () => {
   if (hasFilteredItems) {
     submitButton.style.display = 'none';
 
-  } else{
+  } else {
     submitButton.style.display = 'block';
   }
 });

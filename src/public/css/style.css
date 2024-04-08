@@ -1,11 +1,12 @@
 body {
-  background: #352f5b;
+  background: #1a1a2e;
   font-family: "Josefin Sans", sans-serif;
   font-size: 23px;
 }
 
 .container {
   max-width: 600px;
+  margin-top: 200px;
 }
 
 .hidden-id {
