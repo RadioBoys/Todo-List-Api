@@ -18,8 +18,6 @@ const generateTemplate = (todo) => {
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const todo = addForm.add.value.trim();
-  const searchParams = new URLSearchParams(window.location.search);
-  const username = searchParams.get('username');
   if (todo.length) {
     fetch('/api', {
       method: 'POST',
@@ -28,7 +26,6 @@ addForm.addEventListener("submit", (e) => {
       },
       body: JSON.stringify({
         title: todo,
-        username: username,
       })
     })
     generateTemplate(todo);
@@ -44,7 +41,6 @@ list.addEventListener("click", (e) => {
 
     var spanElement = e.target.parentElement.querySelector('span.hidden-id');
     var idTodo = spanElement.textContent;
-    console.log(idTodo);
     fetch('/api/delete', {
       method: 'PUT',
       headers: {
