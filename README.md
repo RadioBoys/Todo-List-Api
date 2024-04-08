@@ -14,4 +14,6 @@ npm start
 ```
 It will run and start on `http://localhost:3030`.
 
+- In mongodb, you need to create new Database name `todo_list`. Because project will be run and connect to MongoDB with `mongodb://127.0.0.1/todo_list`.
+
 ## Thanks for reading.
