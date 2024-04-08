@@ -9,6 +9,7 @@ function route(app) {
     const store = new MongodbSession({
         uri: 'mongodb://127.0.0.1/todo_list',
         collection: 'sessions',
+        expires: 1000 * 60 * 60 * 24, // delete cookie after 24h
     })
 
     app.use(session({
@@ -44,7 +45,7 @@ function route(app) {
         }
     });
 
-    app.post('/api',isAuth, async (req, res) => {
+    app.post('/api', isAuth, async (req, res) => {
         const checkUser = await User.findOne({ username: req.session.username });
         if (checkUser) {
             const newTodo = await new Todo({ username: checkUser.username, title: `${req.body.title}`, completed: false, date: new Date(), delete: false });
@@ -59,6 +60,23 @@ function route(app) {
             .catch((err) => {
                 console.log(err);
             })
+    })
+
+    app.put('/api/checkedTodo', async (req, res) => {
+        const checkTodo = await Todo.findOne({ _id: req.body._id });
+        if (checkTodo.completed == false) {
+            await Todo.findOneAndUpdate({ _id: req.body._id }, { completed: true }, { new: true })
+                .then(() => { res.render('home'); console.log('Edit complete is TRUE') })
+                .catch((err) => {
+                    console.log(err);
+                })
+        } else {
+            await Todo.findOneAndUpdate({ _id: req.body._id }, { completed: false }, { new: true })
+                .then(() => { res.render('home'); console.log('Edit complete is FALSE!') })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
     })
 
     app.get('/login', (req, res) => {

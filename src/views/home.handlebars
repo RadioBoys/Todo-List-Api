@@ -18,12 +18,18 @@
     <ul class="list-group todos mx-auto text-light delete">
         {{#each showData}}
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span>{{this.title}}</span>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" {{#if this.completed}}checked{{/if}}>
+            </div>
+            {{#if this.completed}}
+            <span class="todo-title completed">{{this.title}}</span>
+            {{else}}
+            <span class="todo-title">{{this.title}}</span>
+            {{/if}}
             <span class="hidden-id">{{this._id}}</span>
             <i class="far fa-trash-alt delete"></i>
         </li>
         {{/each}}
     </ul>
-
 
 </div>

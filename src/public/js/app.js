@@ -2,14 +2,23 @@
 const addForm = document.querySelector(".add");
 const list = document.querySelector(".todos");
 const search = document.querySelector(".search input");
+const checkboxes = document.querySelectorAll('.form-check-input');
 
 // add new todo
 const generateTemplate = (todo) => {
   const html = `
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span>${todo}</span>
-        <i class="far fa-trash-alt delete"></i>
-        </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+  <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" {{#if this.completed}}checked{{/if}}>
+  </div>
+  {{#if this.completed}}
+  <span class="todo-title completed">{{this.title}}</span>
+  {{else}}
+  <span class="todo-title">{{this.title}}</span>
+  {{/if}}
+  <span class="hidden-id">{{this._id}}</span>
+  <i class="far fa-trash-alt delete"></i>
+</li>
         `;
   list.innerHTML += html;
 };
@@ -69,6 +78,43 @@ const filterTodos = (term) => {
 
   return filteredItems.length > 0;
 };
+
+Array.from(checkboxes).forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    const todoTitle = checkbox.parentElement.parentElement.querySelector('.todo-title');
+    const listItem = checkbox.closest('li');
+    const spanElement = listItem.querySelector('span.hidden-id');
+    const idTodo = spanElement.textContent;
+    console.log(idTodo);
+
+    if (checkbox.checked) {
+      fetch('/api/checkedTodo', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          _id: idTodo,
+        })
+      })
+
+      todoTitle.style.textDecoration = 'line-through';
+
+    } else {
+      fetch('/api/checkedTodo', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          _id: idTodo,
+        })
+      })
+
+      todoTitle.style.textDecoration = 'none';
+    }
+  });
+});
 
 // keyup event
 search.addEventListener("keyup", () => {
